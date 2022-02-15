@@ -5,6 +5,8 @@ import CharList from "../charList/CharList";
 import CharInfo from "../charInfo/CharInfo";
 import decoration from '../../resources/img/vision.png';
 import ErrorBoundary from "../errorBoundary/ErrorBoundary";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ComicsList from "../comicsList/ComicsList";
 
 const App = () => {
    const [selectChar, changeChar] = useState(null);
@@ -14,19 +16,20 @@ const App = () => {
    }
  
      return (
-        <div className="app">
-            <AppHeader/>
-            <main>
-                <RandomChar/>
-                <div className="char__content">
-                    <CharList onCharSet={onCharSet}/>
-                    <ErrorBoundary>
-                       <CharInfo id={selectChar}/>
-                    </ErrorBoundary>
-                </div>
-                <img className="bg-decoration" src={decoration} alt="vision"/>
-            </main>
-        </div>
+            <div className="app">
+                    <AppHeader/>
+                <main>
+                    {/* <RandomChar/>
+                    <div className="char__content">
+                        <CharList onCharSet={onCharSet}/>
+                        <ErrorBoundary>
+                        <CharInfo id={selectChar}/>
+                        </ErrorBoundary>
+                    </div>
+                    <img className="bg-decoration" src={decoration} alt="vision"/> */}
+                    <ComicsList/>
+                </main>
+            </div>
     )
 }
 

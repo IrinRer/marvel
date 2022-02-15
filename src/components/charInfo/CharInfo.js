@@ -8,10 +8,8 @@ import Skeleton from '../skeleton/Skeleton';
 
 const CharInfo = (props) => {
     let [char, setChar] = useState(null);
-    let [loading, setLoading] = useState(false);
-    let [error, setError] = useState(false);
 
-    const marverlService = new MarvelService();
+    const {loading, error, getCharacter}= MarvelService();
 
     useEffect(() => {
         updateChar();
@@ -20,7 +18,6 @@ const CharInfo = (props) => {
 
     const onCharLoaded = (char) => {
         setChar(char);
-        setLoading(false);
     }
 
     const updateChar = () => {
@@ -28,20 +25,9 @@ const CharInfo = (props) => {
         if(!id) {
             return;
         }
-        
-        onCharLoadind();
-        marverlService.getCharacter(id).then(onCharLoaded).catch(onError);
+        getCharacter(id).then(onCharLoaded);
     }
 
-    const onCharLoadind = () => {
-        setLoading(true);
-    }
-
-    const onError = () => {
-        setLoading(false);
-        setError(true);
-    }
-    
         const skelet = char || loading || error ? null : <Skeleton/>;
         const errorMessage = error ? <Error/> : null; 
         const spinner = loading ? <Spinner/> : null;

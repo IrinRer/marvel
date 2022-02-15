@@ -7,64 +7,48 @@ import Error from "../error/Error";
 
 const CharList = (props) => {
   const [char, setCharList] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
   const [newItemLoad, setNewItemLoad] = useState(false);
   const [offset, setOffset] = useState(210);
   const [charEnded, setCharEnded] = useState(false);
-  const [color, setColor] = useState(false);
 
-  const marverlService = new MarvelService();
+  const { loading, error, getAllCharacters } = MarvelService();
 
   useEffect(() => {
-    onRequest();
+    onRequest(offset, true);
   }, []);
 
-
-
-const onUpdateChars = (newChar) => {
+  const onUpdateChars = (newChar) => {
     let end = false;
     if (newChar.length < 9) {
       end = true;
     }
-    setCharList(char => [...char, ...newChar]);
-    setLoading(false);
+    setCharList((char) => [...char, ...newChar]);
     setNewItemLoad(false);
-    setOffset(offset => offset + 9);
-    setCharEnded(end)
+    setOffset((offset) => offset + 9);
+    setCharEnded(end);
   };
 
-  const onError = () => {
-    setLoading(false);
-    setError(true);
-  };
-
-  const onCharsLoaddAll = () => {
-    setNewItemLoad(true);
-  };
-
-const onRequest = (offset) => {
-   if(!offset) {
-     setCharList([]);
-     setOffset(210);
-   }
-    onCharsLoaddAll();
-    marverlService
-      .getAllCharacters(offset)
-      .then(onUpdateChars)
-      .catch(onError);
+  const onRequest = (offset, init) => {
+    if (!offset) {
+      setCharList([]);
+      setOffset(210);
+    }
+    init ? setNewItemLoad(true) : setNewItemLoad(false);
+    getAllCharacters(offset).then(onUpdateChars);
   };
 
   const itemRefs = useRef([]);
 
- const onFocused = (id) => {
-   debugger;
-  itemRefs.current.forEach(item => item.classList.remove('char__item_selected'));
-  itemRefs.current[id].classList.add('char__item_selected');
-  itemRefs.current[id].focus();
+  const onFocused = (id) => {
+    debugger;
+    itemRefs.current.forEach((item) =>
+      item.classList.remove("char__item_selected")
+    );
+    itemRefs.current[id].classList.add("char__item_selected");
+    itemRefs.current[id].focus();
   };
 
-function onRender(arr){
+  function onRender(arr) {
     let img = "";
     const items = arr.map((item, i) => {
       if (item.thumbnail.includes("image_not_available")) {
@@ -84,21 +68,20 @@ function onRender(arr){
 
       return (
         <li
-        className="char__item"
+          className="char__item"
           key={item.id}
-          ref={el => itemRefs.current[i] = el}
+          ref={(el) => (itemRefs.current[i] = el)}
           onClick={() => {
             props.onCharSet(item.id);
             onFocused(i);
           }}
           id={item.id}
-
           onKeyPress={(e) => {
-            if (e.key === ' ' || e.key === "Enter") {
-                props.onCharSet(item.id);
-                onFocused(i);
+            if (e.key === " " || e.key === "Enter") {
+              props.onCharSet(item.id);
+              onFocused(i);
             }
-        }}
+          }}
         >
           {img}
           <div className="char__name">{item.name}</div>
@@ -106,30 +89,29 @@ function onRender(arr){
       );
     });
     return items;
-  };
-
-    const fail = error ? <Error /> : null;
-    const load = loading ? <Spinner /> : null;
-    const content = !(loading || error) ? onRender(char) : null;
-
-    return (
-      <div className="char__list">
-        <ul className="char__grid">
-          {fail}
-          {load}
-          {content}
-        </ul>
-        <button
-          className="button button__main button__long"
-          disabled={newItemLoad}
-          onClick={() => onRequest(offset)}
-          style={{ display: charEnded ? "none" : "block" }}
-        >
-          <div className="inner">load more</div>
-        </button>
-      </div>
-    );
   }
+  const items = onRender(char); 
+  const fail = error ? <Error /> : null;
+  const load = loading && !newItemLoad ? <Spinner /> : null;
+
+  return (
+    <div className="char__list">
+      <ul className="char__grid">
+        {fail}
+        {load}
+        {items}
+      </ul>
+      <button
+        className="button button__main button__long"
+        disabled={newItemLoad}
+        onClick={() => onRequest(offset, true)}
+        style={{ display: charEnded ? "none" : "block" }}
+      >
+        <div className="inner">load more</div>
+      </button>
+    </div>
+  );
+};
 
 CharList.propTypes = {
   onCharSet: PropTypes.func.isRequired,
