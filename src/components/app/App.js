@@ -1,6 +1,13 @@
+import React from "react";
+import { Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AppHeader from "../appHeader/AppHeader";
-import {MainPage, ComicsPage, NotFound, SingleComicPage} from '../pages';
+import Spinner from "../spinner/Spinner";
+
+const NotFound = React.lazy(() => import('../pages/notFound/NotFound'));
+const MainPage = React.lazy(() => import('../pages/MainPage'));
+const ComicsPage = React.lazy(() => import('../pages/ComicsPage/ComicsPage'));
+const SingleComicPage = React.lazy(() => import('../pages/ComicsPage/SingleComicPage'));
 
 const App = () => { 
      return (
@@ -8,13 +15,15 @@ const App = () => {
             <div className="app">
                     <AppHeader/>
                 <main>
+                <Suspense fallback={<Spinner/>}>
                     <Routes>
                         <Route path="/" element={<MainPage/>}/>
                         <Route path="/comics" element={<ComicsPage/>}/>
                         <Route path="/comics/:id" element={<SingleComicPage/>}/>
-                        <Route path="*" element={<NotFound/>} />
+                           <Route path="*" element={<NotFound/>} />
                     </Routes>
-                </main>
+                </Suspense>
+                </main> 
             </div>
         </BrowserRouter>
     )
