@@ -1,4 +1,4 @@
-import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { CSSTransition } from "react-transition-group";
 import { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import "./charList.scss";
@@ -42,6 +42,7 @@ const CharList = (props) => {
     }
     init ? setNewItemLoad(true) : setNewItemLoad(false);
     getAllCharacters(offset).then(onUpdateChars);
+    setAnimation(true);
   };
 
   const itemRefs = useRef([]);

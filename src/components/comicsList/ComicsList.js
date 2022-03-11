@@ -1,15 +1,17 @@
 import "./comicsList.scss";
-import { useRef, useState, useEffect } from "react";
+import { CSSTransition } from "react-transition-group";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import MarvelService from "../../services/MarvelService";
 import Error from "../error/Error";
 import Spinner from "../spinner/Spinner";
-import { Link } from "react-router-dom";
 
 const ComicsList = () => {
   const [comics, setComics] = useState([]);
   const [newItemLoad, setNewItemLoad] = useState(false);
   const [offset, setOffset] = useState(210);
   const [charEnded, setCharEnded] = useState(false);
+  const [animationComic, setAnimationComic] = useState(false);
 
   const { loading, error, getAllComics } = MarvelService();
 
@@ -26,6 +28,11 @@ const ComicsList = () => {
     setNewItemLoad(false);
     setOffset((offset) => offset + 8);
     setCharEnded(end);
+    setAnimationComic(false);
+
+    if(document.documentElement.scrollTop > 300) {
+      window.scrollBy(0, 1000);
+    }  
   };
 
   const onRequest = (offset, init) => {
@@ -35,11 +42,13 @@ const ComicsList = () => {
     }
     init ? setNewItemLoad(true) : setNewItemLoad(false);
     getAllComics(offset).then(onUpdateChars);
+    setAnimationComic(true);
   };
 
  function onRender(arr) {
     const items = arr.map((item, i) => {
         return (
+          <CSSTransition timeout={1000} classNames='animationComic' in={animationComic}>
             <li className="comics__item" key={item.id}>
             <Link to={`/comics/${item.id}`}>
               <img src={item.thumbnail} alt={item.title} className="comics__item-img" />
@@ -49,6 +58,7 @@ const ComicsList = () => {
               <div className="comics__item-price">{`${item.price}$`}</div>
             </Link>
           </li>
+          </CSSTransition>
         )
     })
     return items;
@@ -68,7 +78,11 @@ const ComicsList = () => {
       <button  disabled={newItemLoad} 
                 style={{'display' : charEnded? 'none' : 'block'}}
                 className="button button__main button__long"
-                onClick={() => onRequest(offset, true)}>
+                onClick={() => { 
+                  onRequest(offset, true);
+                  setAnimationComic(true);
+                }
+                }>
         <div className="inner">load more</div>
       </button>
     </div>

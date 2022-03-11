@@ -65,7 +65,7 @@
 //   transform: rotate(180deg);
 // }
 
-.animation-enter-active {
+.animation-enter-active, .animation-enter {
   -webkit-animation-name: fadeOutUpBig;
   animation-name: fadeOutUpBig;
   -webkit-animation-duration: 1500ms;
