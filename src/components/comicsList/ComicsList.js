@@ -43,12 +43,13 @@ const ComicsList = () => {
     init ? setNewItemLoad(true) : setNewItemLoad(false);
     getAllComics(offset).then(onUpdateChars);
     setAnimationComic(true);
+    console.log('request');
   };
 
  function onRender(arr) {
     const items = arr.map((item, i) => {
         return (
-          <CSSTransition timeout={1000} classNames='animationComic' in={animationComic}>
+          <CSSTransition timeout={1000} classNames='animationComic' in={animationComic} >
             <li className="comics__item" key={item.id}>
             <Link to={`/comics/${item.id}`}>
               <img src={item.thumbnail} alt={item.title} className="comics__item-img" />

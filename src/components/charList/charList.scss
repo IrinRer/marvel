@@ -46,26 +46,11 @@
   }
 }
 
-// .animation-enter {
-//   transform: rotate(180deg);
-// }
+.animation-enter {
+  opacity: 0;
+} 
 
-// .animation-enter-active {
-//   opacity: 1;
-//   // transition: all 500ms;
-//   transform: rotate(180deg);
-// }
-
-// .animation-exit {
-//   opacity: 1;
-//   transform: rotate(180deg);
-// }
-// .animation-exit-active {
-//   opacity: 0;
-//   transform: rotate(180deg);
-// }
-
-.animation-enter-active, .animation-enter {
+.animation-enter-active {
   -webkit-animation-name: fadeOutUpBig;
   animation-name: fadeOutUpBig;
   -webkit-animation-duration: 1500ms;
