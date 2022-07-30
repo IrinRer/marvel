@@ -2,7 +2,12 @@ const Spinner = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      style={{margin: 'auto', background: 'rgb(255, 255, 255)',display: 'block', shapeRendering: 'auto'}}
+      style={{
+        margin: "auto",
+        background: "rgb(255, 255, 255)",
+        display: "block",
+        shapeRendering: "auto",
+      }}
       width="120px"
       height="120px"
       viewBox="0 0 100 100"

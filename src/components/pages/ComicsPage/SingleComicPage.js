@@ -37,8 +37,7 @@ const SingleComicPage = () => {
 };
 
 const View = ({ comic }) => {
-  const { title, prices, thumbnail, homepage, desc, pageCount, language } =
-    comic;
+  const { title, prices, thumbnail, desc, pageCount, language } = comic;
   return (
     <div className="single-comic">
       <img src={thumbnail} alt={`title`} className="single-comic__img" />

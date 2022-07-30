@@ -24,15 +24,15 @@ const CharList = (props) => {
     if (newChar.length < 9) {
       end = true;
     }
-      setCharList((char) => [...char, ...newChar]);
-      setNewItemLoad(false);
-      setOffset((offset) => offset + 9);
-      setCharEnded(end);
-      setAnimation(false);
-      
-      if(document.documentElement.scrollTop > 300) {
-        window.scrollBy(0, 1000);
-      }  
+    setCharList((char) => [...char, ...newChar]);
+    setNewItemLoad(false);
+    setOffset((offset) => offset + 9);
+    setCharEnded(end);
+    setAnimation(false);
+
+    if (document.documentElement.scrollTop > 300) {
+      window.scrollBy(0, 1000);
+    }
   };
 
   const onRequest = (offset, init) => {
@@ -72,9 +72,9 @@ const CharList = (props) => {
       } else {
         img = <img src={item.thumbnail} alt="abyss" />;
       }
-    
+
       return (
-        <CSSTransition timeout={1000} classNames='animation' in={animation}>
+        <CSSTransition timeout={1000} classNames="animation" in={animation}>
           <li
             className="char__item"
             key={item.id}

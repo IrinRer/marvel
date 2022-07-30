@@ -2,23 +2,23 @@ import { Component } from "react";
 import Error from "../error/Error";
 
 class ErrorBoundary extends Component {
-    state = {
-        error: false
+  state = {
+    error: false,
+  };
+
+  componentDidCatch(error, info) {
+    this.setState({
+      error: true,
+    });
+  }
+
+  render() {
+    if (this.state.error) {
+      return <Error />;
     }
 
-    componentDidCatch(error, info) {
-        this.setState({
-            error: true
-        })
-    }
-
-    render() {
-        if(this.state.error) {
-            return <Error/>
-        }
-
-        return this.props.children;
-    }
+    return this.props.children;
+  }
 }
 
 export default ErrorBoundary;

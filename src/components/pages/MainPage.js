@@ -6,11 +6,11 @@ import ErrorBoundary from "../errorBoundary/ErrorBoundary";
 import decoration from "../../resources/img/vision.png";
 
 const MainPage = () => {
-    const [selectChar, changeChar] = useState(null);
-    
-    function onCharSet(id) {
-        changeChar(id)
-    }
+  const [selectChar, changeChar] = useState(null);
+
+  function onCharSet(id) {
+    changeChar(id);
+  }
 
   return (
     <>

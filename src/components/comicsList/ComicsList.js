@@ -16,7 +16,7 @@ const ComicsList = () => {
   const { loading, error, getAllComics } = MarvelService();
 
   useEffect(() => {
-    onRequest(offset, true); 
+    onRequest(offset, true);
   }, []);
 
   const onUpdateChars = (newComics) => {
@@ -30,9 +30,9 @@ const ComicsList = () => {
     setCharEnded(end);
     setAnimationComic(false);
 
-    if(document.documentElement.scrollTop > 300) {
+    if (document.documentElement.scrollTop > 300) {
       window.scrollBy(0, 1000);
-    }  
+    }
   };
 
   const onRequest = (offset, init) => {
@@ -43,47 +43,53 @@ const ComicsList = () => {
     init ? setNewItemLoad(true) : setNewItemLoad(false);
     getAllComics(offset).then(onUpdateChars);
     setAnimationComic(true);
-    console.log('request');
+    console.log("request");
   };
 
- function onRender(arr) {
+  function onRender(arr) {
     const items = arr.map((item, i) => {
-        return (
-          <CSSTransition timeout={1000} classNames='animationComic' in={animationComic} >
-            <li className="comics__item" key={item.id}>
+      return (
+        <CSSTransition
+          timeout={1000}
+          classNames="animationComic"
+          in={animationComic}
+        >
+          <li className="comics__item" key={item.id}>
             <Link to={`/comics/${item.id}`}>
-              <img src={item.thumbnail} alt={item.title} className="comics__item-img" />
-              <div className="comics__item-name">
-                {item.title}
-              </div>
+              <img
+                src={item.thumbnail}
+                alt={item.title}
+                className="comics__item-img"
+              />
+              <div className="comics__item-name">{item.title}</div>
               <div className="comics__item-price">{`${item.price}$`}</div>
             </Link>
           </li>
-          </CSSTransition>
-        )
-    })
+        </CSSTransition>
+      );
+    });
     return items;
   }
-  const items = onRender(comics); 
+  const items = onRender(comics);
   const fail = error ? <Error /> : null;
   const load = loading && !newItemLoad ? <Spinner /> : null;
 
   return (
-      
     <div className="comics__list">
       <ul className="comics__grid">
         {fail}
         {load}
         {items}
       </ul>
-      <button  disabled={newItemLoad} 
-                style={{'display' : charEnded? 'none' : 'block'}}
-                className="button button__main button__long"
-                onClick={() => { 
-                  onRequest(offset, true);
-                  setAnimationComic(true);
-                }
-                }>
+      <button
+        disabled={newItemLoad}
+        style={{ display: charEnded ? "none" : "block" }}
+        className="button button__main button__long"
+        onClick={() => {
+          onRequest(offset, true);
+          setAnimationComic(true);
+        }}
+      >
         <div className="inner">load more</div>
       </button>
     </div>
