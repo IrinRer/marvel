@@ -1,6 +1,11 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Used technologies:
+React
+Functional components, React-hook
+SCSS
+React-router-dom 6
+React-transition-group
+Prop-types
+API - https://developer.marvel.com/
 
 ## Available Scripts
 
