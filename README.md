@@ -1,11 +1,12 @@
 # Used technologies:
-React
-Functional components, React-hook
-SCSS
-React-router-dom 6
-React-transition-group
-Prop-types
-API - https://developer.marvel.com/
+
+1. React
+2. Functional components, React-hook
+3. SCSS
+4. React-router-dom 6
+5. React-transition-group
+6. Prop-types
+7. API - https://developer.marvel.com/
 
 ## Available Scripts
 
